@@ -1,0 +1,67 @@
+/* styles.css */
+h3,h4 {
+  margin: 0;
+}
+
+body {
+  background:  linear-gradient(0.09turn, #3f87a6 , #f69d3c);
+  color: rgb(233, 228, 228);
+  margin: 0 auto;
+  padding: 0;
+  width: 85%;
+}
+
+.header{
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  
+}
+.header input {
+  border-radius: 30px;
+  margin-right: 100px;
+  width: 400px;
+  border: none;
+}
+
+.temperature {
+  margin-top: 100px;
+}
+.temperature h3 {
+  font-size: 1.5rem;
+}
+
+.weather-rec {
+  display: flex;
+  justify-content: space-between;
+}
+
+.max-min,.feels-like ,.wind{
+  display: flex;
+  padding: 12px;
+  border-radius: 35px;
+  width: 340px;
+  height: 150px;
+  border:1px solid #1193ca; 
+  background:  linear-gradient(0.70turn, #3f87a6, #f69d3c);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.descriptions {
+  display: flex;
+  margin-top:40px ;
+  justify-content: space-between;
+  padding: 10;
+}
+/* .descriptions h3  {
+  margin: 10px;
+  padding: 10px;
+}
+.descriptions span {
+  
+  margin-left: 3px;
+} */
