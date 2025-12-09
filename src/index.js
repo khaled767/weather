@@ -1,6 +1,6 @@
 import "./style.css"
-//import { greeting } from "./greeting"
+import {search} from "./search"
 import { localData } from "./fitching"
 
 localData()
-
+search()

@@ -1,5 +1,5 @@
 /* styles.css */
-h3,h4 {
+h3,h4,p {
   margin: 0;
 }
 
@@ -19,11 +19,42 @@ body {
   
 }
 .header input {
-  border-radius: 30px;
+  border-radius: 10px 10px 0 0 ;
   margin-right: 100px;
   width: 400px;
   border: none;
+  font-size: 18;
+  padding: 20px;
+  letter-spacing: 0.4px;
 }
+#search:focus {
+  outline: none;
+}
+#search-result {
+  /* border: 2px solid #ccc; */
+  background-color: rgb(255, 255, 255);
+  color: black;
+  overflow-y: auto;
+  border-radius: 5px;
+  width: 380px;
+  font-size: 18;
+  padding: 10px;
+  margin: 1px 0 ;
+  position: relative;
+}
+
+
+.suggestions div {
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.suggestions div:hover {
+  background: #f0f0f0;
+}
+
+
 
 .temperature {
   margin-top: 100px;
