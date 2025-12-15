@@ -4,17 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.8.0/font/qweather-icons.css"> -->
 </head>
 <body>
+    
     <div class="header">
-        <h3>logo</h3>
+        <h3><div class="wrapper">
+  <div class="sun"></div>
+  <div class="cloud">
+    <div class="cloud1">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <div class="cloud1 c_shadow">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="cloud_s">
+    <div class="cloud1">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <div class="cloud1 c_shadow">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="cloud_vs">
+    <div class="cloud1">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <div class="cloud1 c_shadow">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  <div class="haze"></div>
+  <div class="haze_stripe"></div>
+  <div class="haze_stripe"></div>
+  <div class="haze_stripe"></div>
+  <div class="thunder"></div>
+  <div class="rain">
+     <ul>
+       <li></li>
+       <li></li>
+       <li></li>
+    </ul>
+  </div>
+  <div class="sleet">
+     <ul>
+       <li></li>
+       <li></li>
+       <li></li>
+    </ul>
+  </div>
+  <div class="text">
+    <ul>
+      <li>Mostly Sunny</li>
+      <li>Partly Sunny</li>
+      <li>Partly Cloudy</li>
+      <li>Mostly Cloudy</li>
+      <li>Cloudy</li>
+      <li>Hazy</li>
+      <li>Thunderstorm</li>
+      <li>Rain</li>
+      <li>Sleet</li>
+    </ul>
+  </div>
+</div></h3>
         <div class="search-box">
             <input type="search" placeholder=" Search City..." id="search" class="search">
             <div class="suggestions" id="search-result"></div>
         </div>
     </div>
     <div class="temperature">
-        <h3>Aleppo, SY</h3>
+        <h3 class="city-name"> Aleppo, SY</h3>
         <div class="weather-rec">
             <div class="max-min">
                 <h4 class="date"></h4>
@@ -33,28 +125,61 @@
             </div>
         </div>
         <div class="descriptions">
-            <div class="uvindex">
-                <h3>Uv Index</h3>
-                <span>0</span>
+            <div class="uv-index">
+                <h3><i class="wi wi-day-sunny"></i>Uv Index</h3>
+                <span class="span-index">0</span>
             </div>
             <div class="humidity">
-                <h3>humidity</h3>
-                <span>0</span>
+                <h3><i class="qi-2120"></i> humidity</h3>
+                <span class="span-humidity" >0</span>
             </div>
-            <div class="chance-of-rain">
-                <h3>chance-of-rain</h3>
-                <span>100%</span>
+            <div class="chance-of-snow">
+                <h3><i class="qi-499">chance-of-snow</i></h3>
+                <span class="span-snow">100%</span>
             </div>
             <div class="sunrise">
-                <h3>Sunrise</h3>
-                <span>05:45</span>
+                <h3><i class="qi-501-fill"></i> Sunrise</h3>
+                <span class="span-sunrise">05:45</span>
             </div>
             <div class="sunsit">
-                <h3>Sunset</h3>
-                <span>18:35</span>
+                <h3><i class="qi-502-fill"></i> sunset</h3>
+                <span class="span-sunset">18:35</span>
             </div>
         </div>
-        
     </div>
+    <ul class="weekly-forecast">
+        <li>
+            <p class="day">Fri</p>
+            <div class="icon"><i>skl</i></div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">29 °C</span></p></li>
+        <li>
+            <p class="day">Sat</p><div class="icon"> </div>
+            <p><span class="min">22 °C</span><span> - </span><span class="max">27 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Sun</p><div class="icon"> </div>
+            <p><span class="min">18 °C</span><span> - </span><span class="max">22 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Mon</p><div class="icon"> </div>
+            <p><span class="min">17 °C</span><span> - </span><span class="max">24 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Tue</p><div class="icon"> </div>
+            <p><span class="min">17 °C</span><span> - </span><span class="max">22 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Wed</p><div class="icon"></div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">27 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Thu</p><div class="icon"></div>
+            <p><span class="min">22 °C</span><span> - </span><span class="max">30 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Fri</p><div class="icon"> </div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">25 °C</span></p>
+        </li>
+    </ul>
 </body>
 </html>

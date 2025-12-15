@@ -1,4 +1,4 @@
-
+import {render} from "./fitching"
 
 // export function search() {
 
@@ -139,7 +139,7 @@ export function search() {
 
   let debounceTimer;
   search.addEventListener("input", (e) => {
-    clearTimeout(debounceTimer);
+    clearTimeout(debounceTimer); //for every time I input it reset the time
 
     debounceTimer = setTimeout(() => {
       const userInput = e.target.value.trim()
@@ -158,7 +158,7 @@ export function search() {
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10&language=en&format=json`
       );
 
-      const data = await response.json()
+      const data = await response.json();
       
       renderSuggestion(data.results || []) 
 
@@ -190,10 +190,45 @@ export function search() {
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}?key=BKQEY9L5T8D2E7DUXET9CAS6Y`
       );
-      const data = await response.json();
-      console.log(`weather in ${cityName}:`, data)
+      if(response.status === 404 || response.status === 400){
+        alert("No city has been found")
+        search.value = ""
+
+      }
+      if (response.ok){
+        const json = await response.json();
+        
+        const weatherData = {
+            //"condition":json["currentConditions"]["conditions"],
+            "address":json.address,
+            "timeZone":json.timezone,
+            "day":json.days[0]["datetime"], 
+            "temperature":json["currentConditions"]["temp"].toString().slice(0,2),//json.days[0]["temp"],
+            "tempMax":json.days[0]["tempmax"].toString().slice(0,2),
+            "tempIn":json.days[0]["tempmin"].toString().slice(0,2),
+            "feelsLike":json["currentConditions"]["feelslike"].toString().slice(0,2),//json.days[0]["feelslike"],
+            "conditions":json["currentConditions"]["icon"],
+            "windS":json["currentConditions"]["windspeed"],//json.days[0]["windspeed"],
+            "cloud":json["currentConditions"]["cloudcover"],//json.days[0]["cloudcover"],
+            "sunIndex":json["currentConditions"]["uvindex"],
+            "humidity":json["currentConditions"]["humidity"],
+            "snow":json["currentConditions"]["snow"],
+            "sunRise":json["currentConditions"]["sunrise"].slice(0,5),
+            "sunSet":json["currentConditions"]["sunset"].slice(0, 5),
+        }
+        render(weatherData)
+        // newRenderData(data.timezone)
+      }
+      
+      // console.log(`weather in ${cityName}:`, data)
     }catch(error){
     console.error("weather error", error)
     }
   }
+
+//   function newRenderData(city){
+//     const newCity = document.querySelector(".city-name")
+//     newCity.innerHTML = ""
+//     newCity.innerHTML = city
+//   }
 }
