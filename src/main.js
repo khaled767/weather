@@ -5,6 +5,8 @@
 //     const temp = document.querySelector(".temp")
 //     const highLow= document.querySelector(".high-low")
 
+import { weekdays } from "moment";
+
 //     const feelsTemp   = document.querySelector(".feels-temp")
 //     const feelsexplain=document.querySelector(".feels-explain")
 
@@ -125,24 +127,24 @@ export async function localData() {
             return;
         }
 
-        const json = await response.json(); console.log(json["days"])
+        const json = await response.json(); console.log(json)
         const weatherData = {
-            //"condition":json["currentConditions"]["conditions"],
+            "condition":json["currentConditions"]["conditions"],
             "address":json.address,
             "timeZone":json.timezone,
             "day":json.days[0]["datetime"], 
-            "temperature":json["currentConditions"]["temp"].toString().slice(0,2),//json.days[0]["temp"],
-            "tempMax":json.days[0]["tempmax"].toString().slice(0,2),
-            "tempIn":json.days[0]["tempmin"].toString().slice(0,2),
-            "feelsLike":json["currentConditions"]["feelslike"].toString().slice(0,2),//json.days[0]["feelslike"],
+            "temperature":json["currentConditions"]["temp"],
+            "tempMax":json.days[0]["tempmax"],
+            "tempIn":json.days[0]["tempmin"],
+            "feelsLike":json["currentConditions"]["feelslike"],
             "conditions":json["currentConditions"]["icon"],
-            "windS":json["currentConditions"]["windspeed"],//json.days[0]["windspeed"],
-            "cloud":json["currentConditions"]["cloudcover"],//json.days[0]["cloudcover"],
+            "windS":json["currentConditions"]["windspeed"],
+            "cloud":json["currentConditions"]["cloudcover"],
             "sunIndex":json["currentConditions"]["uvindex"],
             "humidity":json["currentConditions"]["humidity"],
             "snow":json["currentConditions"]["snow"],
-            "sunRise":json["currentConditions"]["sunrise"].slice(0,5),
-            "sunSet":json["currentConditions"]["sunset"].slice(0, 5),
+            "sunRise":json["currentConditions"]["sunrise"],
+            "sunSet":json["currentConditions"]["sunset"],
             "daysForecast":json["days"]
         }
             
@@ -153,10 +155,11 @@ export async function localData() {
 }
 
 export function render({ 
-    address, timeZone, day, temperature,
-    tempMax, tempIn, feelsLike, conditions,
-    windS, cloud, sunIndex, humidity, snow,
-    sunRise, sunSet, daysForecast}) {    
+    condition, address, timeZone, day,
+    temperature, tempMax, tempIn, feelsLike,
+    conditions, windS, cloud, sunIndex,
+    humidity, snow, sunRise, sunSet, 
+    daysForecast }) {    
 
 
     const newCity = document.querySelector(".city-name")
@@ -176,7 +179,60 @@ export function render({
     const sunSetR = document.querySelector(".span-sunset")
 
     //////////////////////////////////////////////////////////////// 
+
+
+
+
+
+    // Clear All Fildes
     
+    newCity.innerHTML      = "";
+    date.innerHTML         = "";
+    temp.innerHTML         = "";
+    highLow.innerHTML      = "";
+    feelsTemp.innerHTML    = "";
+    feelsexplain.innerHTML = "";
+    windSpeed.innerHTML    = "";
+    direction.innerHTML    = "";
+
+    uvIndex.innerHTML      = "";
+    humdtyR.innerHTML      = "";
+    snowR.innerHTML        = "";
+    sunRiseR.innerHTML     = "";
+    sunSetR.innerHTML      = "";
+    
+    // // Render New Data
+    // if(conditions === "partly-cloudy-night") {
+    //     newCity.innerHTML = `<i class="qi-151-fill" style="font-size:46px; color: #333130ff;"></i>${address} ${timeZone}`
+    // }
+    // else if(conditions === "rain") {
+    //     newCity.innerHTML = `<i class="qi-307-fill" style="font-size:(46px; color: #333130ff;"></i>${address} ${timeZone}`
+    // }
+
+    //  <i class="qi-150-fill" style="font-size:48px; color: #ff9800;"></i> 
+
+    newCity.innerHTML = `<i class= "wi ${getWeatherIcon(condition)}"></i> ${address.toUpperCase()} ${timeZone}`;
+    date.textContent = day
+    
+    temp.textContent = Math.round(temperature) + " °F"
+    highLow.textContent= "max: " + Math.round(tempMax) + "  °F, min: "+ Math.round(tempIn) + " °F"
+    
+    feelsTemp.textContent = Math.round(feelsLike) + " °F";
+
+    feelsexplain.textContent = conditions.split("-",3).join(" ") 
+    
+    windSpeed.textContent = Math.round(windS) + " Km/h";
+    direction.textContent = "cloudcover: " + cloud;
+
+    // Second line More features
+    uvIndex.textContent = sunIndex;
+    humdtyR.textContent =  "% " +Math.round(humidity) ;
+    snowR.textContent = snow + "%"
+    sunRiseR.textContent = sunRise.slice(0,5)
+    sunSetR.innerHTML = sunSet.slice(0,5)
+
+    // Days Forecast
+
     // 1- select all li that contain day, icon, max & min
     const foreCastItems = document.querySelectorAll(".weekly-forecast li");
     
@@ -193,7 +249,9 @@ export function render({
         const li = foreCastItems[index] // => Here we controll in each line by index
         if (!li) return;
 
-        const dayName = new Date(dayDate.datetime).toLocaleDateString("en-us",{weekday:"short"})
+        const dayName = new Date(dayDate.datetime).toLocaleDateString("en-us", {weekday:"short"}
+
+        )
 
         li.querySelector('.day').textContent = dayName;
 
@@ -205,55 +263,6 @@ export function render({
         li.querySelector('.icon').innerHTML =`
             <i class="wi ${getWeatherIcon(dayDate.icon)}"></i>`
     })
-
-
-
-
-
-    // Clear All Fildes
-    newCity.innerHTML      = "";
-    date.innerHTML         = "";
-    temp.innerHTML         = "";
-    highLow.innerHTML      = "";
-    feelsTemp.innerHTML    = "";
-    feelsexplain.innerHTML = "";
-    windSpeed.innerHTML    = "";
-    direction.innerHTML    = "";
-
-    uvIndex.innerHTML      = "";
-    humdtyR.innerHTML      = "";
-    snowR.innerHTML        = "";
-    sunRiseR.innerHTML     = "";
-    sunSetR.innerHTML      = "";
-    
-    // Render New Data
-    if(conditions === "partly-cloudy-night") {
-        newCity.innerHTML = `<i class="qi-151-fill" style="font-size:46px; color: #333130ff;"></i>${address} ${timeZone}`
-    }
-    else if(conditions === "rain") {
-        newCity.innerHTML = `<i class="qi-307-fill" style="font-size:(46px; color: #333130ff;"></i>${address} ${timeZone}`
-    }
-
-     //<i class="qi-150-fill" style="font-size:48px; color: #ff9800;"></i> 
-    date.innerHTML = day
-    
-    temp.innerHTML = temperature + " F"
-    highLow.innerHTML= "max: " + tempMax + " F, min: "+ tempIn + " F"
-    
-    feelsTemp.innerHTML = feelsLike+ " F";
-    feelsexplain.innerHTML = conditions.replace("-"," ");
-
-    windSpeed.innerHTML = windS + " Km/h";
-    direction.innerHTML = "cloudcover: " + cloud;
-
-    // Second line More features
-    uvIndex.innerHTML = sunIndex;
-    humdtyR.innerHTML =  "% " +humidity ;
-    snowR.innerHTML = snow + "%"
-    sunRiseR.innerHTML = sunRise
-    sunSetR.innerHTML = sunSet
-
-    // Rendering Days of week
 }
 
 function getWeatherIcon(icon) {

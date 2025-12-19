@@ -1,6 +1,6 @@
 import "./style.css";
 import {search} from "./search";
-import { localData } from "./fitching";
+import { localData } from "./main";
 import "weather-icons/css/weather-icons.css"
 
 localData()
