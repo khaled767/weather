@@ -129,7 +129,7 @@ export async function localData() {
 
         const json = await response.json(); console.log(json)
         const weatherData = {
-            "condition":json["currentConditions"]["conditions"],
+            // "condition":json["currentConditions"]["conditions"],
             "address":json.address,
             "timeZone":json.timezone,
             "day":json.days[0]["datetime"], 
@@ -155,7 +155,8 @@ export async function localData() {
 }
 
 export function render({ 
-    condition, address, timeZone, day,
+    // condition,
+    address, timeZone, day,
     temperature, tempMax, tempIn, feelsLike,
     conditions, windS, cloud, sunIndex,
     humidity, snow, sunRise, sunSet, 
@@ -166,7 +167,7 @@ export function render({
     const date   = document.querySelector(".date")
     const temp   = document.querySelector(".temp")
     const highLow= document.querySelector(".high-low")
-    const feelsTemp   = document.querySelector(".feels-temp")
+    const feelsTemp   = document.querySelector("#feels-temp")
     const feelsexplain=document.querySelector(".feels-explain")
     const windSpeed = document.querySelector("#wind")
     const direction = document.querySelector(".direction")
@@ -201,20 +202,12 @@ export function render({
     sunRiseR.innerHTML     = "";
     sunSetR.innerHTML      = "";
     
-    // // Render New Data
-    // if(conditions === "partly-cloudy-night") {
-    //     newCity.innerHTML = `<i class="qi-151-fill" style="font-size:46px; color: #333130ff;"></i>${address} ${timeZone}`
-    // }
-    // else if(conditions === "rain") {
-    //     newCity.innerHTML = `<i class="qi-307-fill" style="font-size:(46px; color: #333130ff;"></i>${address} ${timeZone}`
-    // }
+    
 
-    //  <i class="qi-150-fill" style="font-size:48px; color: #ff9800;"></i> 
-
-    newCity.innerHTML = `<i class= "wi ${getWeatherIcon(condition)}"></i> ${address.toUpperCase()} ${timeZone}`;
+    newCity.innerHTML = `<i class= "wi ${getWeatherIcon(conditions)}"></i> ${address.toUpperCase()} ${timeZone}`;
     date.textContent = day
     
-    temp.textContent = Math.round(temperature) + " °F"
+    temp.innerHTML = `${Math.round(temperature)} <i class="wi wi-fahrenheit"></i>`
     highLow.textContent= "max: " + Math.round(tempMax) + "  °F, min: "+ Math.round(tempIn) + " °F"
     
     feelsTemp.textContent = Math.round(feelsLike) + " °F";
@@ -263,17 +256,21 @@ export function render({
         li.querySelector('.icon').innerHTML =`
             <i class="wi ${getWeatherIcon(dayDate.icon)}"></i>`
     })
+
+    function getWeatherIcon(icon) {
+        
+        const map = {
+            "clear-day":"wi-day-sunny",                        
+            "clear-night":"wi-night-clear",
+            "snow": "wi-snow",
+            "rain":"wi-rain",
+            "partly-cloudy-day":"wi-day-cloudy",
+            "partly-cloudy-night":"wi-night-alt-cloudy",
+            "cloudy":"wi-cloudy",
+            
+        };
+        return map[icon] || "wi-cloudy" || map.cloudy;
+    }
+    
 }
 
-function getWeatherIcon(icon) {
-    const map = {
-        "clear-day":"wi-day-sunny",
-        "clear-night":"wi-night-clear",
-        "snow": "wi-snow",
-        "rain":"wi-rain",
-        "partly-cloudy-day":"wi-day-cloudy",
-        "partly-cloudy-night":"wi-night-alt-cloudy",
-        "cloudy":"wi-cloudy",
-    };
-    return map[icon] || "wi-cloudy";
-}

@@ -9,11 +9,15 @@
 <body>
     
     <div class="header">
-      .logo
+      <div class="logo">logo</div>
         <div class="search-box ">
             <input type="search" placeholder=" Search City..." id="search" class="search">
             <div class="suggestions" id="search-result"></div>
         </div>
+    </div>
+    <div class="switch-temp">
+          <input type="checkbox" id="check" class="toggle">
+          <label for="check"><i class="wi wi-celsius"></i></label>
     </div>
     <div class="temperature">
         <h3 class="city-name"> Aleppo, SY</h3>
@@ -25,7 +29,7 @@
             </div>
             <div class="feels-like">
                 <h4>Feels like</h4>
-                <h1 class="feels-temp"> 13 C</h1>
+                <h1 class="temp" id="feels-temp"> 13 C</h1>
                 <h4 class="feels-explain"> Partially cloudy</h4>
             </div>
             <div class="wind">
@@ -40,7 +44,7 @@
                 <span class="span-index">0</span>
             </div>
             <div class="humidity">
-                <h3><i class="wi wi-windy"></i> humidity</h3>
+                <h3><i class="wi wi-cloud-down"></i>humidity</h3>
                 <span class="span-humidity" >0</span>
             </div>
             <div class="chance-of-snow">

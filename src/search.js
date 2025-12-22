@@ -70,7 +70,7 @@ export function search() {
         const json = await response.json(); 
         
         const weatherData = {
-            "condition":json["currentConditions"]["conditions"],
+            // "condition":json["currentConditions"]["icon"],
             "address":json.address,
             "timeZone":json.timezone,
             "day":json.days[0]["datetime"], 
@@ -87,7 +87,7 @@ export function search() {
             "sunRise":json["currentConditions"]["sunrise"],
             "sunSet":json["currentConditions"]["sunset"],
             "daysForecast":json["days"]
-        }
+        }; console.log(json["currentConditions"]["icon"])
         render(weatherData)
         // newRenderData(data.timezone)
       }

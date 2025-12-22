@@ -1,4 +1,8 @@
 /* styles.css */
+
+
+
+
 h3,h4,p {
   margin: 0;
   font-weight:300;
@@ -19,7 +23,6 @@ body {
   display: flex;
   justify-content: space-between;
   height: 40px;
-  
 }
 .header input {
   border-radius: 10px 10px 0 0 ;
@@ -57,16 +60,75 @@ body {
 .suggestions div:hover {
   background: #f0f0f0;
 }
+/* --------------------------------------- */
+input[type="checkbox"].toggle {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+  left: -9000px;
+  top: -9000px;
+}
+input[type="checkbox"].toggle + label {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"].toggle + label::before {
+  content: "";
+  width: 4em;
+  height: 2em;
+  background-color: #3f87a6;
+  border-radius: 1em;
+  margin-right: .25em;
+}
+input[type="checkbox"].toggle:checked + label::before {
+  background-color: #3692b9;
+  /* background-color: #c5952f; */
+
+}
+
+input[type="checkbox"].toggle + label::after {
+  position: absolute;
+  left: .6;
+  content: "";
+  width: 1.9em;
+  height: 1.9em;
+  background-color: #b8964d;
+  border-radius: 1em;
+  margin-right: .25em;
+}
+
+input[type="checkbox"].toggle:checked + label::after {
+  transform:translateX(100%);
+  background-color: #ac9466;
+  /* background-color: #598a97; */
+}
+
+input[type="checkbox"].toggle:checked + label {
+  color: black;
+}
+
+.switch-temp label i{
+  font-size: 2.2em;
+}
+
+
+/* ----------------------------------------- */
+
 
 
 
 .temperature {
   margin-top: 100px;
 }
-.temperature h3 {
+.temperature .city-name {
   font-size: 1.5rem;
 }
-
+.temperature .city-name i {
+  color: #ff9800;
+  font-size: 4rem;
+}
 .weather-rec {
   display: flex;
   justify-content: space-between;
