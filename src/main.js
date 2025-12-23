@@ -182,7 +182,7 @@ export function render({
     //////////////////////////////////////////////////////////////// 
 
 
-
+    
 
 
     // Clear All Fildes
@@ -202,15 +202,17 @@ export function render({
     sunRiseR.innerHTML     = "";
     sunSetR.innerHTML      = "";
     
-    
+
+
+
 
     newCity.innerHTML = `<i class= "wi ${getWeatherIcon(conditions)}"></i> ${address.toUpperCase()} ${timeZone}`;
     date.textContent = day
     
-    temp.innerHTML = `${Math.round(temperature)} <i class="wi wi-fahrenheit"></i>`
-    highLow.textContent= "max: " + Math.round(tempMax) + "  °F, min: "+ Math.round(tempIn) + " °F"
+    temp.innerHTML = `${Math.round(temperature)}<i class="wi wi-fahrenheit"></i>`;
+    highLow.innerHTML= `Max:${Math.round(tempMax)}<i class="wi wi-fahrenheit"></i> Min:${Math.round(tempIn)}<i class="wi wi-fahrenheit"></i>`
     
-    feelsTemp.textContent = Math.round(feelsLike) + " °F";
+    feelsTemp.innerHTML = `${Math.round(feelsLike)}<i class="wi wi-fahrenheit"></i>`;
 
     feelsexplain.textContent = conditions.split("-",3).join(" ") 
     
@@ -251,8 +253,8 @@ export function render({
         li.querySelector(".max").textContent =
             Math.round(dayDate.tempmax) + " °F";
 
-        li.querySelector('.min').textContent =
-            Math.round(dayDate.tempmin) + " °F"
+        li.querySelector('.min').innerHTML =
+            `${Math.round(dayDate.tempmin)}<i class="wi wi-fahrenheit"></i>`
         li.querySelector('.icon').innerHTML =`
             <i class="wi ${getWeatherIcon(dayDate.icon)}"></i>`
     })
@@ -272,5 +274,41 @@ export function render({
         return map[icon] || "wi-cloudy" || map.cloudy;
     }
     
+
+    // temperature value
+    const currentTempValue = temp.innerHTML
+
+    // Define the checkBox button
+    const tempBtn = document.querySelector("#check")
+    const label  = document.querySelector("label")
+    tempBtn.addEventListener("click", () => {
+        console.log(tempBtn.checked)
+        if(tempBtn.checked === true) {
+            label.innerHTML = `<i class="wi wi-fahrenheit"></i>`
+
+            // Change F to C temp
+            const stringNum = currentTempValue.slice(0,3)
+            let celsus = Math.round((parseInt(stringNum) - 32) / (9/5))
+            console.log(celsus);
+            temp.innerHTML = `${celsus}<i class="wi wi-celsius"></i>`;
+            feelsTemp.innerHTML = `${Math.round((feelsLike -32 ) / (9/5))}<i class = "wi wi-celsius"></i>`;
+            highLow.innerHTML= `Max:${Math.round((tempMax - 32) / (9/5))}<i class="wi wi-celsius"></i> Min:${Math.round((tempIn - 32) / (9/5))}<i class="wi wi-celsius"></i>`;
+
+            // Rendering 8 days and transfering it to C
+            // 1-
+
+        //     const minDays = document.querySelectorAll(".min")
+        //     minDays.forEach((min) => {
+        //         min.innerHTML = `${Math.round(dayDate.tempmin)}<i class="wi wi-celsius"></i>`
+        //     })
+        }
+        else {
+            label.innerHTML = `<i class="wi wi-celsius"></i>`
+            temp.innerHTML = `${Math.round(temperature)}<i class="wi wi-fahrenheit"></i>`
+            feelsTemp.innerHTML = `${Math.round(feelsLike)}<i class="wi wi-fahrenheit"></i>`
+            highLow.innerHTML=  `Max:${Math.round(tempMax)}<i class="wi wi-fahrenheit"></i> Min:${Math.round(tempIn)}<i class="wi wi-fahrenheit"></i>`
+        }
+    })
 }
 
+// I should look to the span and <i> in week day forecast html

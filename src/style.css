@@ -15,7 +15,7 @@ body {
   margin: 0 auto;
   padding: 0;
   width: 85%;
-  
+  font-family: 'Cursive', Courier, monospace;
 }
 
 .header{
@@ -147,7 +147,14 @@ input[type="checkbox"].toggle:checked + label {
   align-items: center;
   
 }
-
+.max-min h4 {
+  color: rgb(226, 209, 186);
+}
+.max-min h4 i{
+  /* font-size: 1.1em; */
+  font-weight:500;
+  color:white;
+}
 .descriptions {
   display: flex;
   margin-top:40px ;
