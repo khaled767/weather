@@ -126,7 +126,6 @@ input[type="checkbox"].toggle:checked + label {
   font-size: 1.5rem;
 }
 .temperature .city-name i {
-  color: #ff9800;
   font-size: 4rem;
 }
 .weather-rec {
@@ -205,6 +204,4 @@ div .icon{
   justify-content: center;
   align-items: center;
 }
-
-
 

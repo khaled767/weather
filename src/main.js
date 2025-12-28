@@ -1,118 +1,20 @@
 
 
-// export async function localData() {
-//     const date = document.querySelector(".date")
-//     const temp = document.querySelector(".temp")
-//     const highLow= document.querySelector(".high-low")
+let currentUnit = "f";
+let lastWeatherData = null; // here will save last API result
 
-import { weekdays } from "moment";
+function fToC(f) {
+  return Math.round((f- 32) * 5 / 9);
+}
+function cToF(c) {
+  return Math.round((c * 9 / 5) + 32);
+}
 
-//     const feelsTemp   = document.querySelector(".feels-temp")
-//     const feelsexplain=document.querySelector(".feels-explain")
-
-//     const windSpeed = document.querySelector("#wind")
-//     const direction = document.querySelector(".direction")
-//     try{
-//         const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/istanbul?key=BKQEY9L5T8D2E7DUXET9CAS6Y")
-
-//         if(response.status === 404) {
-//             console.log("No Such City")
-//             return ;
-//         }
-
-//         if(!response.ok) {
-//             alert("Network error"+ error)
-//             return;
-//         }
-
-//         const json = await response.json()
-        
-//         date.innerHTML = json.days[0]["datetime"]
-//         temp.innerHTML = json.days[0]["temp"] +" F"
-//         highLow.innerHTML= "max: " +json.days[0]["tempmax"] + " F, min: "+  json.days[0]["tempmin"] + " F"
-        
-//         feelsTemp.innerHTML = json.days[0]["feelslike"]+ " F"
-//         feelsexplain.innerHTML = json.days[0]["conditions"]
-
-//         windSpeed.innerHTML = json.days[0]["windspeed"] + " Km/h"
-//         direction.innerHTML = "cloudcover: " +json.days[0]["cloudcover"]
-
-
-//     }catch(error) {
-//         alert("Network error", error.message);
-//         console.log(error)
-//     }
-    
-// }
-
-// export async function localData() {
-//     try{
-//         const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/aleppo?key=BKQEY9L5T8D2E7DUXET9CAS6Y")
-//         if(response.status === 404) {
-//             console.log("No Such City")
-//             return ;
-//         }
-
-//         if(!response.ok) {
-//             alert("Network error"+ error)
-//             return;
-//         }
-
-//         const json = await response.json()
-//         dates(json.address,json.timezone, json.days[0]["datetime"], 
-//             json.days[0]["temp"],json.days[0]["tempmax"],
-//             json.days[0]["tempmin"],json.days[0]["feelslike"],
-//             json.days[0]["conditions"],json.days[0]["windspeed"],
-//             json.days[0]["cloudcover"])
-//     }catch(error) {
-//      console.log(error)
-//     }
-// }
-
-// export function dates(nameOfCity,timeZone, day, Tempruture, max, min,
-//     feelslike, conditions, windS, cloud) {
-//     const newCity = document.querySelector(".city-name")
-
-//     const date = document.querySelector(".date")
-//     const temp = document.querySelector(".temp")
-//     const highLow= document.querySelector(".high-low")
-
-//     const feelsTemp   = document.querySelector(".feels-temp")
-//     const feelsexplain=document.querySelector(".feels-explain")
-
-//     const windSpeed = document.querySelector("#wind")
-//     const direction = document.querySelector(".direction")
-
-//     // Clearing All Fildes
-//     date.innerHTML         = "";
-//     temp.innerHTML         = "";
-//     highLow.innerHTML      = "";
-//     feelsTemp.innerHTML    = "";
-//     feelsexplain.innerHTML = "";
-//     windSpeed.innerHTML    = "";
-//     direction.innerHTML    = "";
-//     newCity.innerHTML = ""
-    
-//     newCity.innerHTML = `${nameOfCity} ${timeZone} `
-
-//     // date.innerHTML = json.days[0]["datetime"]
-//     date.innerHTML = day
-
-//     // temp.innerHTML = json.days[0]["temp"] +" F"
-//     temp.innerHTML = Tempruture +" F"
-//     highLow.innerHTML= "max: " + max + " F, min: "+ min + " F"
-    
-//     feelsTemp.innerHTML = feelslike+ " F"
-//     feelsexplain.innerHTML = conditions
-
-//     windSpeed.innerHTML = windS + " Km/h"
-//     direction.innerHTML = "cloudcover: " + cloud
-
-// }
-
-
-
-
+// func to return the display Value according to the unit
+function tempToggle(valueInf) {
+  if (currentUnit === "f") return Math.round(valueInf) +`<i class= "wi wi-fahrenheit"></i>`;
+  return fToC(valueInf) + `<i class="wi wi-celsius"></i>`
+}
 
 export async function localData() {
     try{
@@ -127,7 +29,7 @@ export async function localData() {
             return;
         }
 
-        const json = await response.json(); console.log(json)
+        const json = await response.json(); 
         const weatherData = {
             // "condition":json["currentConditions"]["conditions"],
             "address":json.address,
@@ -154,14 +56,18 @@ export async function localData() {
     }
 }
 
-export function render({ 
-    // condition,
-    address, timeZone, day,
-    temperature, tempMax, tempIn, feelsLike,
-    conditions, windS, cloud, sunIndex,
-    humidity, snow, sunRise, sunSet, 
-    daysForecast }) {    
+export function render(data) {    
 
+    //  data = { 
+    // // condition,
+    // address, timeZone, day,
+    // temperature, tempMax, tempIn, feelsLike,
+    // conditions, windS, cloud, sunIndex,
+    // humidity, snow, sunRise, sunSet, 
+    // daysForecast }
+
+    if(!data) return;
+    lastWeatherData = data
 
     const newCity = document.querySelector(".city-name")
     const date   = document.querySelector(".date")
@@ -179,12 +85,6 @@ export function render({
     const sunRiseR = document.querySelector(".span-sunrise")
     const sunSetR = document.querySelector(".span-sunset")
 
-    //////////////////////////////////////////////////////////////// 
-
-
-    
-
-
     // Clear All Fildes
     
     newCity.innerHTML      = "";
@@ -195,120 +95,114 @@ export function render({
     feelsexplain.innerHTML = "";
     windSpeed.innerHTML    = "";
     direction.innerHTML    = "";
-
     uvIndex.innerHTML      = "";
     humdtyR.innerHTML      = "";
     snowR.innerHTML        = "";
     sunRiseR.innerHTML     = "";
-    sunSetR.innerHTML      = "";
+    sunSetR.innerHTML      = ""; 
+
+    const iconData = getWeatherIcon(data.conditions)
+    newCity.innerHTML =
+        `<i class="wi ${iconData.class}"
+            style="color:${iconData.color}"></i>
+            ${data.address.toUpperCase()} ${data.timeZone}`; 
+    date.textContent = data.day
     
-
-
-
-
-    newCity.innerHTML = `<i class= "wi ${getWeatherIcon(conditions)}"></i> ${address.toUpperCase()} ${timeZone}`;
-    date.textContent = day
+    //temp.innerHTML = `${Math.round(data.temperature)}<i class="wi wi-fahrenheit"></i>`;
+    temp.innerHTML = `${tempToggle(data.temperature)}`
+    highLow.innerHTML= `Max:${tempToggle(data.tempMax)} Min:${tempToggle(data.tempIn)}`
     
-    temp.innerHTML = `${Math.round(temperature)}<i class="wi wi-fahrenheit"></i>`;
-    highLow.innerHTML= `Max:${Math.round(tempMax)}<i class="wi wi-fahrenheit"></i> Min:${Math.round(tempIn)}<i class="wi wi-fahrenheit"></i>`
-    
-    feelsTemp.innerHTML = `${Math.round(feelsLike)}<i class="wi wi-fahrenheit"></i>`;
+    feelsTemp.innerHTML = `${tempToggle(data.feelsLike)}`;
 
-    feelsexplain.textContent = conditions.split("-",3).join(" ") 
+    feelsexplain.textContent = (typeof data.conditions === "string") ? data.conditions.split("-",3).join(" ") : "";
     
-    windSpeed.textContent = Math.round(windS) + " Km/h";
-    direction.textContent = "cloudcover: " + cloud;
+    windSpeed.textContent = Math.round(data.windS) + " Km/h";
+    direction.innerHTML = `cloud cover: ${data.cloud} <i class="wi wi-day-cloudy-windy"></i> `;
 
     // Second line More features
-    uvIndex.textContent = sunIndex;
-    humdtyR.textContent =  "% " +Math.round(humidity) ;
-    snowR.textContent = snow + "%"
-    sunRiseR.textContent = sunRise.slice(0,5)
-    sunSetR.innerHTML = sunSet.slice(0,5)
+    uvIndex.textContent = data.sunIndex;
+    humdtyR.textContent =  "% " +Math.round(data.humidity) ;
+    snowR.textContent = data.snow + "%"
+    sunRiseR.textContent = data.sunRise.slice(0,5)
+    sunSetR.innerHTML = data.sunSet.slice(0,5)
 
-    // Days Forecast
-
-    // 1- select all li that contain day, icon, max & min
-    const foreCastItems = document.querySelectorAll(".weekly-forecast li");
+    // Rendering the Days Forecast
     
-    // 2- clear all the contain by forEach
-    foreCastItems.forEach(li => {
-        li.querySelector(".day").textContent = "";
-        li.querySelector(".icon").textContent= "";
-        li.querySelector(".max").textContent = "";
-        li.querySelector(".min").textContent = "";
+    // 1- select all li that contain day, icon, max & min and clear it
+    const weekDays = document.querySelectorAll(".weekly-forecast li")
+    weekDays.forEach(element => {
+        element.querySelector('.day').textContent = "";
+        element.querySelector('.icon').textContent = "";
+        element.querySelector('.max').textContent = "";
+        element.querySelector('.min').textContent = "";
     })
-    // 3-render 8days sting by slice then trnsfer it tolcaldate
-    //   then render it including dayDate, index
-    daysForecast.slice(1,9).forEach((dayDate,index) => {
-        const li = foreCastItems[index] // => Here we controll in each line by index
-        if (!li) return;
-
-        const dayName = new Date(dayDate.datetime).toLocaleDateString("en-us", {weekday:"short"}
-
-        )
-
-        li.querySelector('.day').textContent = dayName;
-
-        li.querySelector(".max").textContent =
-            Math.round(dayDate.tempmax) + " °F";
-
-        li.querySelector('.min').innerHTML =
-            `${Math.round(dayDate.tempmin)}<i class="wi wi-fahrenheit"></i>`
-        li.querySelector('.icon').innerHTML =`
-            <i class="wi ${getWeatherIcon(dayDate.icon)}"></i>`
+    
+    // 2- fitch the 8 days you need and loop forEach day
+    data.daysForecast.slice(1, 9).forEach((dayInformation,index) => {
+        const li = weekDays[index]; if(!li) return;
+        
+        // chagne day from number to dayname
+        const dayName = new Date(dayInformation.datetime).toLocaleDateString("en-US", {weekday:"short"})
+        
+        li.querySelector(".day").textContent = dayName; 
+        li.querySelector(".max").innerHTML = `${tempToggle(dayInformation.tempmax)}`;
+        li.querySelector(".min").innerHTML = `${tempToggle(dayInformation.tempmin)}`;
+        li.querySelector(".icon").innerHTML =
+            `<i class="wi ${getWeatherIcon(dayInformation.icon).class}"
+                style="color:${getWeatherIcon(dayInformation.icon).color}">
+            </i>` ;
     })
 
     function getWeatherIcon(icon) {
-        
-        const map = {
-            "clear-day":"wi-day-sunny",                        
-            "clear-night":"wi-night-clear",
-            "snow": "wi-snow",
-            "rain":"wi-rain",
-            "partly-cloudy-day":"wi-day-cloudy",
-            "partly-cloudy-night":"wi-night-alt-cloudy",
-            "cloudy":"wi-cloudy",
-            
-        };
-        return map[icon] || "wi-cloudy" || map.cloudy;
+      const map = {
+        "clear-day": {
+          class: "wi-day-sunny",
+          color: "#ddd127ff"
+        },
+        "clear-night": {
+          class: "wi-night-clear",
+          color: "#545457ff"
+        },
+        "partly-cloudy-day": {
+          class: "wi-day-cloudy",
+          color: "#f69d3c"
+        },
+        "partly-cloudy-night": { 
+          class: "wi-night-alt-cloudy",
+          color: "#474849ff"
+        },
+        "cloudy": {
+          class: "wi-cloudy",
+          color: "#beb6b6ff"
+        },
+        "rain": {
+          class: "wi-rain",
+          color: "#81b5f1ff"
+        },
+        "snow": {
+          class: "wi-snow",
+          color: "#e0f7ff"
+        },
+        "thunderstorm": {
+          class: "wi-thunderstorm",
+          color: "#ffcc00"
+        }
+      };
+      return map[icon] || map.cloudy || "wi-cloudy";
     }
-    
-
-    // temperature value
-    const currentTempValue = temp.innerHTML
-
-    // Define the checkBox button
-    const tempBtn = document.querySelector("#check")
-    const label  = document.querySelector("label")
-    tempBtn.addEventListener("click", () => {
-        console.log(tempBtn.checked)
-        if(tempBtn.checked === true) {
-            label.innerHTML = `<i class="wi wi-fahrenheit"></i>`
-
-            // Change F to C temp
-            const stringNum = currentTempValue.slice(0,3)
-            let celsus = Math.round((parseInt(stringNum) - 32) / (9/5))
-            console.log(celsus);
-            temp.innerHTML = `${celsus}<i class="wi wi-celsius"></i>`;
-            feelsTemp.innerHTML = `${Math.round((feelsLike -32 ) / (9/5))}<i class = "wi wi-celsius"></i>`;
-            highLow.innerHTML= `Max:${Math.round((tempMax - 32) / (9/5))}<i class="wi wi-celsius"></i> Min:${Math.round((tempIn - 32) / (9/5))}<i class="wi wi-celsius"></i>`;
-
-            // Rendering 8 days and transfering it to C
-            // 1-
-
-        //     const minDays = document.querySelectorAll(".min")
-        //     minDays.forEach((min) => {
-        //         min.innerHTML = `${Math.round(dayDate.tempmin)}<i class="wi wi-celsius"></i>`
-        //     })
-        }
-        else {
-            label.innerHTML = `<i class="wi wi-celsius"></i>`
-            temp.innerHTML = `${Math.round(temperature)}<i class="wi wi-fahrenheit"></i>`
-            feelsTemp.innerHTML = `${Math.round(feelsLike)}<i class="wi wi-fahrenheit"></i>`
-            highLow.innerHTML=  `Max:${Math.round(tempMax)}<i class="wi wi-fahrenheit"></i> Min:${Math.round(tempIn)}<i class="wi wi-fahrenheit"></i>`
-        }
-    })
-}
+  }
 
 // I should look to the span and <i> in week day forecast html
+
+const tempBtn = document.querySelector("#check");
+    const label   = document.querySelector("label");
+
+    // we put this condition to make sure the element is exist 
+    if (tempBtn) {
+      tempBtn.addEventListener("change", () => {
+        currentUnit = tempBtn.checked ? "c" : "f";
+
+        label.innerHTML = currentUnit === "c"?`<i class="wi wi-celsius"></i>` :`<i class="wi wi-fahrenheit"></i>`
+        if (lastWeatherData) render(lastWeatherData)
+      })
+    }
