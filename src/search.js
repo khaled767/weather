@@ -3,7 +3,10 @@ import {render} from "./main"
 
 
 
-export function search() {
+export function citySearch() {
+  let citiesData = []; // adding later the cities names inside it
+  let selectedIndex  = -1;
+
   const search = document.querySelector(".search")
   const suggestionsBox = document.querySelector(".suggestions")
 
@@ -39,24 +42,61 @@ export function search() {
 
   function renderSuggestion(cities) {
     suggestionsBox.innerHTML = "";
+    citiesData = cities;
+    selectedIndex = -1 ;//resest selection
     
-
-    cities.forEach((city) => {
+    cities.forEach((city,index)  => {
       const div = document.createElement("div")
+      // adding classList
+      div.classList.add('suggestion')
       div.textContent = `${city.name}, ${city.country}`;
 
       div.addEventListener("click", () => {
-        suggestionsBox.innerHTML = ""
-        suggestionsBox.style.display = "none"
-        search.value = city.name;
+        // adding new function
+        selectCity(index);
 
-        // Fetch weather after selecting city
-        fetchWeather(city.name)
       });
       suggestionsBox.appendChild(div)
     });
   }
 
+  // KeyBoard Navigation
+  search.addEventListener("keydown", (e) => {
+    const items = document.querySelectorAll(".suggestion")
+    
+    if(!items.length) return;
+
+    if(e.key === "ArrowDown") { 
+      e.preventDefault()
+      selectedIndex = (selectedIndex + 1) % items.length ;
+      updateActive(items)
+    }
+
+    if(e.key === "ArrowUp") {
+      e.preventDefault()
+      selectedIndex = (selectedIndex -1 + items.length) % items.length
+      updateActive(items)
+    }
+    if(e.key === "Enter" && selectedIndex >= 0) {
+      e.preventDefault();
+      selectCity(selectedIndex);
+    }
+  });
+
+  function updateActive(items) {
+  items.forEach(item => item.classList.remove("active"));
+  items[selectedIndex].classList.add("active");
+}
+
+  function selectCity(index) {
+    const city = citiesData[index]
+
+    search.value = city.name;
+    suggestionsBox.innerHTML = "";
+    suggestionsBox.style.display = "none"
+
+    fetchWeather(city.name)
+    } 
   async function fetchWeather(cityName) {
     try{
       const response = await fetch(

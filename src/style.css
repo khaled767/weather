@@ -50,15 +50,24 @@ body {
   position: relative;
 }
 
+.suggestions {
+  display: block;
+  position: absolute;
+  background: white;
+  width: 380px;
+  z-index: 1000;
+}
 
-.suggestions div {
+.suggestion {
   padding: 10px;
   cursor: pointer;
   z-index: 1;
 }
 
-.suggestions div:hover {
-  background: #f0f0f0;
+.suggestion:hover,
+ .suggestion.active {
+  background: #2c7be5;
+  color: white;
 }
 /* --------------------------------------- */
 input[type="checkbox"].toggle {
@@ -149,9 +158,12 @@ input[type="checkbox"].toggle:checked + label {
 .max-min h4 {
   color: rgb(226, 209, 186);
 }
+
 .max-min h4 i{
   /* font-size: 1.1em; */
   font-weight:500;
+  font-size: 1rem;
+  margin: 2px;
   color:white;
 }
 .descriptions {
@@ -186,6 +198,7 @@ input[type="checkbox"].toggle:checked + label {
 }
 .weekly-forecast li {
  width: 110px; 
+ height: fit-content;
  list-style: none;
  background-color: rgba(0, 0, 0, 0.2); 
 border-radius: 10px;

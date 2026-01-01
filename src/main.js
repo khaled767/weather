@@ -58,14 +58,6 @@ export async function localData() {
 
 export function render(data) {    
 
-    //  data = { 
-    // // condition,
-    // address, timeZone, day,
-    // temperature, tempMax, tempIn, feelsLike,
-    // conditions, windS, cloud, sunIndex,
-    // humidity, snow, sunRise, sunSet, 
-    // daysForecast }
-
     if(!data) return;
     lastWeatherData = data
 
