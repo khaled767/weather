@@ -1,0 +1,115 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.8.0/font/qweather-icons.css"> -->
+<script defer src="bundle.js"></script></head>
+<body>
+    
+    <div class="header">
+      <div class="logo">logo</div>
+        <div class="search-box ">
+            <input type="search" placeholder=" Search City..." id="search" class="search" autocomplete="off">
+            <div class="suggestions" id="search-result"></div>
+        </div>
+    </div>
+    <div class="switch-temp">
+          <input type="checkbox" id="check" class="toggle">
+          <label for="check"><i class="wi wi-celsius"></i></label>
+    </div>
+    <div class="temperature">
+        <h3 class="city-name"> Aleppo, SY</h3>
+        <div class="weather-rec">
+            <div class="max-min">
+                <h4 class="date"></h4>
+                <h1 class="temp"></h1>
+                <h4 class="high-low">max:18 C,min:7C</h4>
+            </div>
+            <div class="feels-like">
+                <h4>Feels like</h4>
+                <h1 class="temp" id="feels-temp"></h1>
+                <h4 class="feels-explain"> Partially cloudy</h4>
+            </div>
+            <div class="wind">
+                <h4>Wind</h4>
+                <h1 id="wind"> 4Km/h</h1>
+                <h4 class="direction">Gusts: N/A</h4>
+            </div>
+        </div>
+        <div class="descriptions">
+            <div class="uv-index">
+                <h3><i class="wi wi-solar-eclipse"></i>Uv Index</h3>
+                <span class="span-index">0</span>
+            </div>
+            <div class="humidity">
+                <h3><i class="wi wi-cloud-down"></i>humidity</h3>
+                <span class="span-humidity" >0</span>
+            </div>
+            <div class="chance-of-snow">
+                <h3><i class="wi wi-snow"></i>chance-of-snow</h3>
+                <span class="span-snow">100%</span>
+            </div>
+            <div class="sunrise">
+                <h3><i class="wi wi-sunrise"></i> Sunrise</h3>
+                <span class="span-sunrise">05:45</span>
+            </div>
+            <div class="sunsit">
+                <h3><i class="wi wi-sunset"></i> sunset</h3>
+                <span class="span-sunset">18:35</span>
+            </div>
+        </div>
+    </div>
+    <ul class="weekly-forecast">
+        <li>
+            <p class="day">Fri</p>
+            <div class="icon"><i>skl</i></div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">29 °C</span></p></li>
+        <li>
+            <p class="day">Sat</p><div class="icon"> </div>
+            <p><span class="min">22 °C</span><span> - </span><span class="max">27 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Sun</p><div class="icon"> </div>
+            <p><span class="min">18 °C</span><span> - </span><span class="max">22 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Mon</p><div class="icon"> </div>
+            <p><span class="min">17 °C</span><span> - </span><span class="max">24 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Tue</p><div class="icon"> </div>
+            <p><span class="min">17 °C</span><span> - </span><span class="max">22 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Wed</p><div class="icon"></div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">27 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Thu</p><div class="icon"></div>
+            <p><span class="min">22 °C</span><span> - </span><span class="max">30 °C</span></p>
+        </li>
+        <li>
+            <p class="day">Fri</p><div class="icon"> </div>
+            <p><span class="min">21 °C</span><span> - </span><span class="max">25 °C</span></p>
+        </li>
+    </ul>
+    <div class="li">
+        <p class="city"></p>
+        <p class="address"></p>
+        <span class="code"></span>
+    </div>
+    <div class="li">
+        <p class="city"></p>
+        <p class="address"></p>
+        <span class="code"></span>
+    </div>
+    <div class="li">
+        <p class="city"></p>
+        <p class="address"></p>
+        <span class="code"></span>
+    </div>
+</body>
+</html>
+
